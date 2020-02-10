@@ -3,7 +3,7 @@ from .models import Picture, Request
 from .form import PictureForm, LogInForm
 from django.conf import settings
 from django.db import IntegrityError
-
+from django.contrib.auth import authenticate, login, logout
 
 def access_denied(request):
 	return render(request, 'error.html', {'message': 'Permission denied'})
@@ -27,26 +27,26 @@ def super_user(func):
 	return super_check
 
 
-@permission
-def index(request):
-	if request.user.is_authenticated:
-		context = {"message": "Authenticated" }
-	else:
-		context = {"message": "Not authenticated"}
-	return render(request, 'test.html', context)
-
-
 def log_in(request):
+	context = {}
 	if request.method == 'POST':
 		form = LogInForm(request.POST)
 		if form.is_valid():
-			try:
+			user = authenticate(username=form.cleaned_data['user_name'], password=form.cleaned_data['password'])
+			if user is not None:
+				login(request, user)
 				return redirect(get_all_pictures)
-			except IntegrityError:
-				form = LogInForm()
+			else:
+				context['form'] = LogInForm()
+				context['message'] = "User or password invalid"
 	else:
-		form = LogInForm()
-	return render(request, 'login.html', {'form': form})
+		context['form'] = LogInForm()
+	return render(request, 'login.html', context)
+
+@permission
+def log_out(request):
+	logout(request)
+	return redirect(log_in)
 
 @permission
 @super_user
@@ -95,9 +95,6 @@ def req_pic(request):
 	return render(request, 'index.html', {'message': 'Request has been send'})
 
 
-@permission
-def clear_db(request):
-	Picture.objects.all().delete()
-	return render(request, 'index.html', {"message": "clear"})
+
 
 
