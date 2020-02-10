@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+{% block body %}
+    <p>{{ name }}</p>
+    <img class="fit-picture"
+     src="{{ pic }}"
+     alt="{{ pic }}">
+    <p> {{ description }}</p>
+    {% if user.is_superuser %}
+        <a name="subject" type="submit" href='delete/{{ id }}' class="btn btn-sm btn-danger">delete</a>
+    {% endif %}
+{% endblock %}

@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <form action="/pictures/picture" enctype="multipart/form-data" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
-</body>
-</html>
+{% extends 'index.html' %}
+{% block body %}
+    <form action="/add_pic" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+    <a href=" " class="btn btn-success">Return</a>
+
+{% endblock %}

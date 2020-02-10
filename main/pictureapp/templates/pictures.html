@@ -1,15 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% for pic in pics %}
-    <p>{{ pic.pic }}</p>
-    <img class="fit-picture"
-         src= '{{ pic.pic }}'
-         alt="Grapefruit slice atop a pile of other slices">
-    {% endfor %}
-</body>
-</html>
+{% extends 'index.html' %}
+{% block body %}
+{% for pic in pics %}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{{ pic.pic }}" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">{{ pic.description }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                       <form action="/get_pic" method="get">
+                        <button name="subject" type="submit" class="btn btn-sm btn-primary" value="{{ pic.name }}">view</button>
+                       </form>
+                        {% if user.is_superuser %}
+                            <a name="subject" type="submit" href='delete/{{ pic.id }}' class="btn btn-sm btn-danger">delete</a>
+                        {% endif %}
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+		{% endfor %}
+{% endblock %}
