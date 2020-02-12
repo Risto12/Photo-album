@@ -12,3 +12,11 @@ Add, delete, update pictures.<br>
 Email notification when a picture is requested.<br>
 Working on apache server.
 
+Login
+![Login](login.png)
+
+Pictures
+![Pictures](pictures.png)
+
+Picture
+![Picture](picture.png)
