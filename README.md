@@ -16,7 +16,7 @@ Login
 ![Login](login.png)
 
 Pictures
-![Pictures](pictures.png)
+![Pictures](all_pictures.png)
 
 Picture
 ![Picture](picture.png)
