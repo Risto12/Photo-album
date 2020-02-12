@@ -2,7 +2,11 @@
 {% block body %}
     <form action="/add_pic" enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        {{ form }}
+          <table>
+        {% for field in form %}
+            <tr><td>{{field}}</td></tr>
+        {% endfor %}
+        </table>
         <input type="submit" value="Submit">
     </form>
     <a href=" " class="btn btn-success">Return</a>

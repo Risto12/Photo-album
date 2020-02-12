@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 
+
 def access_denied(request):
 	return render(request, 'error.html', {'message': 'Permission denied'})
 
@@ -43,10 +44,12 @@ def log_in(request):
 		context['form'] = LogInForm()
 	return render(request, 'login.html', context)
 
+
 @permission
 def log_out(request):
 	logout(request)
 	return redirect(log_in)
+
 
 @permission
 @super_user
@@ -88,6 +91,7 @@ def get_picture(request):
 	pic = Picture.objects.get(name=request.GET["subject"])
 	pic.photo = settings.MEDIA_URL + str(pic.photo)
 	return render(request, 'picture.html', {'id': pic.id, 'name': pic.name, 'pic': pic.photo, 'description': pic.description})
+
 
 @permission
 def req_pic(request):

@@ -1,28 +1,49 @@
 <!doctype html>
 <html lang="en">
-  {% load static %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
-	<head>
+{% load static %}
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Seppo album</title>
-      <form action="/log_in" enctype="multipart/form-data" method="post">
+
+    <title>Signin Template for Bootstrap</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'signin.css' %}">
+
+  </head>
+  <body class="text-center">
+        <div class="container">
+      <div class="navbar-dark bg-dark box-shadow">
+        <div class="container">
+          <div class="navbar-brand align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>Seppo gallery</strong>
+          </div>
+        </div>
+      </div>
+            <br>
+            <br>
+            <h4>Log in</h4>
+        <form action="/log_in" enctype="multipart/form-data" method="post">
         {% csrf_token %}
-        {{ form }}
+            <br>
+            <p>Username:</p>
+            {{ form.user_name }}
+            <br>
+            <br>
+            <p>Password:</p>
+            {{ form.password }}
+            <br>
+            <br>
         <input type="submit" value="Submit">
     </form>
         <p>{{ message }}</p>
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="{% static 'popper.min.js' %}"></script>
-    <script src="{% static 'bootstrap.min.js' %}"></script>
-    <script src="{% static 'holder.min.js' %}"></script>
-  </body>
+        </div>
+    </body>
 </html>
+
