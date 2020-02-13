@@ -116,5 +116,5 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 virtual
-static
+main/static
 .idea
