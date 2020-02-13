@@ -1,10 +1,10 @@
 {% extends 'index.html' %}
-{% block body %}
+{% block picture %}
     <form action="/add_pic" enctype="multipart/form-data" method="post">
         {% csrf_token %}
           <table>
         {% for field in form %}
-            <tr><td>{{field}}</td></tr>
+            <tr><td>{{ field }}</td></tr>
         {% endfor %}
         </table>
         <input type="submit" value="Submit">
