@@ -1,4 +1,5 @@
 from django import forms
+from .models import PictureGroup
 
 
 class PictureForm(forms.Form):
@@ -6,7 +7,7 @@ class PictureForm(forms.Form):
     name = forms.CharField(label='name', max_length=100)
     photo = forms.ImageField()
     description = forms.CharField(label='description', widget=forms.Textarea)
-
+    group_id = forms.CharField(label='description', widget=forms.Select(choices=PictureGroup.choises.get_choises()))
 
 class LogInForm(forms.Form):
 

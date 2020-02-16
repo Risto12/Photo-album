@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Picture, Request
+from .models import Picture, Request, PictureGroup, PictureGroupUsers
 from .form import PictureForm, LogInForm
 from django.conf import settings
 from django.db import IntegrityError
@@ -57,8 +57,11 @@ def add_pic(request):
 	if request.method == 'POST':
 		form = PictureForm(request.POST, request.FILES)
 		if form.is_valid():
+			print(form.cleaned_data['group_id'])
 			try:
-				Picture(name=form.cleaned_data['name'], photo=form.cleaned_data['photo'], description=form.cleaned_data['description']).save()
+				pic_group = PictureGroup.objects.get(name=form.cleaned_data['group_id'])
+				Picture(name=form.cleaned_data['name'], photo=form.cleaned_data['photo'], description=form.cleaned_data['description'],
+						picture_group=pic_group).save()
 				return redirect(get_all_pictures)
 			except IntegrityError:
 				#FIX ERROR MESSAGE
@@ -78,7 +81,12 @@ def del_pic(request, *args, **kwargs):
 
 @permission
 def get_all_pictures(request):
-	pics = Picture.objects.all()
+	user_id = request.user.id
+	pic_group = []
+	pic_group_user = PictureGroupUsers.objects.filter(user=user_id).values()
+	for i in pic_group_user:
+		pic_group.append(i.get('group_id'))
+	pics = Picture.objects.filter(picture_group_id__in=pic_group)
 	context = {'pics': []}
 	for pic in pics:
 		pic.photo = settings.MEDIA_URL + str(pic.photo)
