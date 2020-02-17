@@ -4,7 +4,7 @@ from .form import PictureForm, LogInForm
 from django.conf import settings
 from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
-
+from django import forms
 
 def access_denied(request):
 	return render(request, 'error.html', {'message': 'Permission denied'})
@@ -57,7 +57,6 @@ def add_pic(request):
 	if request.method == 'POST':
 		form = PictureForm(request.POST, request.FILES)
 		if form.is_valid():
-			print(form.cleaned_data['group_id'])
 			try:
 				pic_group = PictureGroup.objects.get(name=form.cleaned_data['group_id'])
 				Picture(name=form.cleaned_data['name'], photo=form.cleaned_data['photo'], description=form.cleaned_data['description'],
@@ -66,8 +65,11 @@ def add_pic(request):
 			except IntegrityError:
 				#FIX ERROR MESSAGE
 				form = PictureForm()
+				form.fields['group_id'] = forms.CharField(label='description', widget=forms.Select(
+					choices=PictureGroup.choises.get_choises()))
 	else:
 		form = PictureForm()
+		form.fields['group_id'] = forms.CharField(label='description', widget=forms.Select(choices=PictureGroup.choises.get_choises()))
 	return render(request, 'picture_form.html', {'form': form})
 
 
